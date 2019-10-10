@@ -27,5 +27,12 @@ export class PieceOfArtSource {
             title: '',
             resultType: 'OPALE'
         });
+        this.peiceOfArts.push({
+            enigmaType: 2,
+            assetLink: 'assets/Artung enigme 1.mp3',
+            title: '',
+            resultType: 'SOUND',
+            resultLocation: 'assets/Artung réponse 1.mp3'
+        });
     }
 }

@@ -10,8 +10,6 @@ import { SlideComponent } from '../slides/slide.component';
   providers: [Keyboard]
 })
 export class HomePage implements AfterViewInit {
-
-  timeLeft = 30;
   interval;
   subscribeTimer: any;
 
@@ -25,7 +23,7 @@ export class HomePage implements AfterViewInit {
     const source = timer(1000, 2000);
     const abc = source.subscribe(val => {
       console.log(val, '-');
-      this.subscribeTimer = this.timeLeft - val;
+      this.subscribeTimer = this.slideComponent.maintimeLeft - val;
     });
   }
 
@@ -36,10 +34,21 @@ export class HomePage implements AfterViewInit {
 
   startTimer() {
     this.interval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
+      if (this.slideComponent.maintimeLeft > 0) {
+        this.slideComponent.maintimeLeft--;
       } else {
-        this.timeLeft = 30;
+        if (!this.slideComponent.isUnlock) {
+          alert('Time is up!');
+          this.slideComponent.slides.length().then(res => {
+            if ((this.slideComponent.selectedPiecOfArtId + 1) >= res) {
+              this.slideComponent.slides.slideTo(0);
+            } else {
+              this.slideComponent.slides.slideTo(this.slideComponent.selectedPiecOfArtId + 1);
+            }
+
+          });
+        }
+        this.slideComponent.maintimeLeft = 30;
       }
     }, 1000);
   }

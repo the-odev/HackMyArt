@@ -1,4 +1,4 @@
-<ion-slides autoplay="2500" loop="true" *ngIf="pieceOfArtSource.peiceOfArts">
+<ion-slides autoplay="2500" loop="true" *ngIf="pieceOfArtSource.peiceOfArts" (ionSlideDidChange)="slideChanged()">
     <ng-container *ngFor="let pieceOfArt of pieceOfArtSource.peiceOfArts; let i = index">
         <ion-slide>
             <ion-card *ngIf="pieceOfArt.enigmaType === 1">
@@ -16,6 +16,13 @@
             <ion-card *ngIf="pieceOfArt.enigmaType === 4">
                 <ion-card-content [ngStyle]="{'background' : 'url(' + pieceOfArt.assetLink + ')'}"
                     (click)="checkNumberOfClick(i)">
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngIf="pieceOfArt.enigmaType === 2">
+                <ion-card-content>
+                    <audio controls>
+                        <source [src]="pieceOfArt.assetLink" type="audio/mpeg">
+                    </audio>
                 </ion-card-content>
             </ion-card>
         </ion-slide>
