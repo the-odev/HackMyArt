@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { SlideComponent } from '../slides/slide.component';
+import { ResultComponent } from '../result/result.component';
 
 @NgModule({
   imports: [

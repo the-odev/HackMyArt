@@ -16,7 +16,7 @@ export class HomePage implements AfterViewInit {
   subscribeTimer: any;
 
 
-  @ViewChild('slider', { static: false }) slideComponent: SlideComponent;
+  @ViewChild(SlideComponent, { static: false }) slideComponent: SlideComponent;
 
   constructor(private keyboard: Keyboard) { }
 

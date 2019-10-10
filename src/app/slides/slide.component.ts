@@ -1,6 +1,8 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PieceOfArtSource } from '../enigmas/enigma.source';
+import { IonInput } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'slide-comp',
@@ -9,36 +11,27 @@ import { PieceOfArtSource } from '../enigmas/enigma.source';
 })
 export class SlideComponent {
 
-    // slides = [
-    //     {
-    //         title: 'Hack my Art',
-    //         imageUrl: 'assets/banniere_Hackmyart_v7.jpg',
-    //         private: false
-    //     },
-    //     {
-    //         title: 'Pingouin',
-    //         imageUrl: 'assets/655x369-pingouin_1452715089.jpg',
-    //         private: false
-    //     },
-    //     {
-    //         title: 'La ronde brisée des sœurs ennemies',
-    //         imageUrl: 'assets/TexteEnigme1.JPG',
-    //         private: false,
-    //     }
-    // ];
+    public pieceOfArtSource: PieceOfArtSource = new PieceOfArtSource();
 
-    public piecesOfArt: PieceOfArtSource = new PieceOfArtSource();
+    public selectedPiecOfArtId: number;
 
     public message = '';
 
-    @ViewChild('input', { static: false }) myInput: ElementRef;
+    @ViewChild('input', { static: false }) myInput: IonInput;
 
 
-    constructor() { }
+    constructor(private router: Router) { }
 
 
 
     public setInputTextFocus() {
-        this.myInput.nativeElement.focus();
+        this.myInput.setFocus();
+    }
+
+    public isItCorrect(pieceOfArtId: number) {
+        console.log('change', this.message);
+        if (this.message.toUpperCase() === this.pieceOfArtSource.peiceOfArts[pieceOfArtId].answer) {
+            this.router.navigate(['result'], { queryParams: { pieceOfArt: pieceOfArtId } });
+        }
     }
 }

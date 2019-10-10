@@ -1,14 +1,19 @@
-<ion-slides autoplay="2500" loop="true" *ngIf="piecesOfArt.peiceOfArts">
-    <ng-container *ngFor="let pieceOfArt of piecesOfArt.peiceOfArts">
+<ion-slides autoplay="2500" loop="true" *ngIf="pieceOfArtSource.peiceOfArts">
+    <ng-container *ngFor="let pieceOfArt of pieceOfArtSource.peiceOfArts; let i = index">
         <ion-slide>
-            <ion-card>
+            <ion-card *ngIf="pieceOfArt.enigmaType === 1">
                 <ion-card-content [ngStyle]="{'background' : 'url(' + pieceOfArt.assetLink + ')'}">
                 </ion-card-content>
-                <!-- <h2>{{pieceOfArt.textIndication}}</h2> -->
                 <ng-container *ngIf="pieceOfArt.textIndication">
                     <p>{{pieceOfArt.textIndication}}</p>
-                    <ion-input type="text" [(ngModel)]="message" #input ></ion-input>
+                    <ion-input type="text" [(ngModel)]="message" (change)="isItCorrect(i)" #input></ion-input>
                 </ng-container>
+            </ion-card>
+            <ion-card *ngIf="pieceOfArt.enigmaType === 3">
+                <video controls="controls" preload="metadata" autoplay="false" webkit-playsinline="webkit-playsinline"
+                    class="videoPlayer">
+                    <source src="https://player.vimeo.com/external/85569724.sd.mp4?s=43df5df0d733011263687d20a47557e4"
+                        type="video/mp4" /></video>
             </ion-card>
         </ion-slide>
     </ng-container>
