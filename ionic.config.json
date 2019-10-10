@@ -1,5 +1,7 @@
 {
   "name": "HackMyArt",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

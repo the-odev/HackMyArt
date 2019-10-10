@@ -1,0 +1,15 @@
+<ion-slides autoplay="2500" loop="true" *ngIf="piecesOfArt.peiceOfArts">
+    <ng-container *ngFor="let pieceOfArt of piecesOfArt.peiceOfArts">
+        <ion-slide>
+            <ion-card>
+                <ion-card-content [ngStyle]="{'background' : 'url(' + pieceOfArt.assetLink + ')'}">
+                </ion-card-content>
+                <!-- <h2>{{pieceOfArt.textIndication}}</h2> -->
+                <ng-container *ngIf="pieceOfArt.textIndication">
+                    <p>{{pieceOfArt.textIndication}}</p>
+                    <ion-input type="text" [(ngModel)]="message" #input ></ion-input>
+                </ng-container>
+            </ion-card>
+        </ion-slide>
+    </ng-container>
+</ion-slides>

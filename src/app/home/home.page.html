@@ -1,14 +1,26 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      ArtUNG
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <div class="ion-text-center">
+    <p>{{timeLeft}} Seconds Left....</p>
   </div>
+  <slide-comp id="slider"></slide-comp>
+  <ion-row class="ion-align-items-center">
+    <ion-col class="text-align: center">
+      <button (click)="showKeyboard()"><i class="fa fa-align-justify"></i></button>
+    </ion-col>
+    <ion-col class="text-align: center">
+      <i class="fa fa-microphone"></i>
+    </ion-col>
+    <ion-col class="text-align: center">
+      <i class="fa fa-mobile"></i>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
