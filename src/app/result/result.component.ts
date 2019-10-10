@@ -12,7 +12,7 @@ export class ResultComponent {
 
     public pieceOfArtSource = new PieceOfArtSource();
     public showOpaleResult = false;
-
+    public showYannResult = false;
 
     public htmlAnswer: string;
     constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
@@ -27,6 +27,9 @@ export class ResultComponent {
             }
             if (this.pieceOfArtSource.peiceOfArts[pieceOfArtId].resultType === 'OPALE') {
                 this.showOpaleResult = true;
+            }
+            if (this.pieceOfArtSource.peiceOfArts[pieceOfArtId].resultType === 'SOUND') {
+                this.showYannResult = true;
             }
 
         });

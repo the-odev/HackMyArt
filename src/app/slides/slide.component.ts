@@ -33,18 +33,16 @@ export class SlideComponent implements AfterViewInit {
     @ViewChild('videoPlayer', { static: false }) videoPlayer: ElementRef;
     @ViewChild(IonSlides, { static: false }) slides: IonSlides;
 
-    constructor(private router: Router, private deviceMotion: DeviceMotion, private dbMeter: DBMeter,
+    constructor(private router: Router,
+        private deviceMotion: DeviceMotion,
+        private dbMeter: DBMeter,
         private screenOrientation: ScreenOrientation) {
 
         console.log('toto');
 
-        // const subscription = this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => {
-        //     alert(acceleration);
-        //     console.log(acceleration);
-        // });
-
-        // // Stop watch
-        // subscription.unsubscribe();
+        this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => {
+            console.log(acceleration);
+        });
     }
 
 
@@ -92,14 +90,24 @@ export class SlideComponent implements AfterViewInit {
 
     public slideChanged() {
         this.slides.getActiveIndex().then(res => {
+            console.log('selectedPieceId', res);
             this.isUnlock = false;
             this.maintimeLeft = 30;
             this.selectedPiecOfArtId = res;
             if (res === 3) {
                 console.log('here db meter is gonna start');
                 this.dbMeter.start().subscribe(
-                    data => console.log(data)
-                );
+                    data => {
+                        console.log(data);
+                        if (data > 80) {
+                            this.isUnlock = true;
+                            this.router.navigate(['result'], { queryParams: { pieceOfArt: this.selectedPiecOfArtId } });
+                        }
+                    });
+            } else {
+                if (this.dbMeter.isListening) {
+                    this.dbMeter.stop();
+                }
             }
             if (res === 1) {
                 this.screenOrientation.onChange().subscribe(
@@ -109,7 +117,6 @@ export class SlideComponent implements AfterViewInit {
                         const video: HTMLVideoElement = this.videoPlayer.nativeElement;
                         if (this.screenOrientation.type === 'landscape-secondary') {
                             video.play();
-                            // this.screenOrientation.lock('portrait-primary');
                         } else {
                             video.pause();
                         }
