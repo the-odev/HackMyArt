@@ -8,4 +8,5 @@ export class PieceOfArt {
     answer?: string;
     resultType?: string;
     resultLocation?: string;
+    numberOfTap?: number;
 }

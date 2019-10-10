@@ -1,4 +1,54 @@
 <div [innerHTML]="htmlAnswer" style="overflow-y:auto; margin: 5px 5px 5px;"></div>
+<div *ngIf="showOpaleResult" style="overflow-y:auto; margin: 5px 5px 5px;">
+    <ion-row class="ion-align-items-center">
+        <ion-col>
+            <img src="assets/opale-result/65463557_2736071966409814_2239450425499582464_n.jpg" />
+        </ion-col>
+        <ion-col>
+            <img src="assets/opale-result/IMG_2741.JPG" />
+        </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+        <ion-col>
+            <img src="assets/opale-result/IMG_8782.jpg" />
+        </ion-col>
+        <ion-col>
+            <img src="assets/opale-result/IMG_8792.JPG" />
+        </ion-col>
+    </ion-row>
+    <ion-row style="max-width: 95vw; margin: 5px 5px 5px; overflow-y: auto; overflow-wrap: break-word;">
+
+        <p
+            style="margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:&quot;Times New Roman&quot;,serif;background:white;vertical-align:baseline;">
+            <strong><span
+                    style="font-size:15px;font-family:&quot;Arial&quot;,sans-serif;color:#414141;border:none windowtext 1.0pt;padding:0cm;">Loreleï
+                    (je n'ai pas la vertus des femmes de marins), 2019
+                    <br>&nbsp;
+                </span></strong></p>
+        <p
+            style="margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:&quot;Times New Roman&quot;,serif;background:white;vertical-align:baseline;">
+            <span
+                style="font-size:15px;font-family:&quot;Arial&quot;,sans-serif;color:#414141;border:none windowtext 1.0pt;padding:0cm;">La
+                performeuse se présente comme Lorelei, une femme de la mer.
+                <br> Elle porte sur sa tête la barque remplit de cheveux et de roses roses
+                <br> qu’elle vient déposé.
+                <br>&nbsp;Elle cueille les roses puis les figes dans un liquide blanc.
+            </span></p>
+        <p
+            style="margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:&quot;Times New Roman&quot;,serif;background:white;vertical-align:baseline;">
+            <span style="font-size:15px;font-family:&quot;Arial&quot;,sans-serif;color:#414141;">&nbsp;</span></p>
+        <p
+            style="margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:&quot;Times New Roman&quot;,serif;background:white;vertical-align:baseline;">
+            <em><span
+                    style="font-size:15px;font-family:&quot;Arial&quot;,sans-serif;color:#414141;border:none windowtext 1.0pt;padding:0cm;">Lorelei
+                    a pris la place des marins,
+                    <br> Les marins du mois de juin.
+                    <br> Des fleurs ont été jetées à la mer,
+                    <br> Des fleurs ont été cueillies sur les plages.
+                    <br>&nbsp;Des fleurs ont été figées dans le lait des femmes de la mer.
+                </span></em></p>
+    </ion-row>
+</div>
 <div style="text-align: center;">
     <a [routerLink]="['/home']">BACK</a>
 </div>

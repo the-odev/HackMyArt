@@ -15,7 +15,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  declarations: [ResultComponent],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

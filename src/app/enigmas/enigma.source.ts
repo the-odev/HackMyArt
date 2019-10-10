@@ -1,6 +1,4 @@
 import { PieceOfArt } from '../models/PieceOfArt';
-import { EnigmaTypeEnum } from '../models/EnigmaType';
-import { runInThisContext } from 'vm';
 
 
 export class PieceOfArtSource {
@@ -20,8 +18,14 @@ export class PieceOfArtSource {
         });
         this.peiceOfArts.push({
             enigmaType: 3,
-            assetLink: 'assests/whitney.mp4',
+            assetLink: 'assets/TROPA WHITNEY AE V1.webm',
             title: 'Shake Withney',
+        });
+        this.peiceOfArts.push({
+            enigmaType: 4,
+            assetLink: 'assets/artungopale.jpg',
+            title: '',
+            resultType: 'OPALE'
         });
     }
 }
