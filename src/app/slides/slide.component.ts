@@ -29,6 +29,7 @@ export class SlideComponent implements AfterViewInit {
     public isUnlock = false;
     public maintimeLeft = 30;
     private deviceMotionsubscribe: Subscription;
+    private dbMeterSubscribe: Subscription;
     private lastUpdate: number;
     private lastX: number;
     private lastY: number;
@@ -41,14 +42,21 @@ export class SlideComponent implements AfterViewInit {
     @ViewChild('videoPlayer2', { static: false }) videoPlayer2: ElementRef;
     @ViewChild(IonSlides, { static: false }) slides: IonSlides;
 
-    constructor(private router: Router,
+    constructor(
+        private router: Router,
         private deviceMotion: DeviceMotion,
         private dbMeter: DBMeter,
         private screenOrientation: ScreenOrientation) {
-
     }
 
-
+    ngAfterViewInit() {
+        if (this.videoPlayer) {
+            const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+            const video2: HTMLVideoElement = this.videoPlayer2.nativeElement;
+            video.pause();
+            video2.pause();
+        }
+    }
 
     public setInputTextFocus() {
         this.myInput.setFocus();
@@ -59,15 +67,6 @@ export class SlideComponent implements AfterViewInit {
         if (this.message.toUpperCase() === this.pieceOfArtSource.peiceOfArts[pieceOfArtId].answer) {
             this.isUnlock = true;
             this.router.navigate(['result'], { queryParams: { pieceOfArt: pieceOfArtId } });
-        }
-    }
-
-    ngAfterViewInit() {
-        if (this.videoPlayer) {
-            const video: HTMLVideoElement = this.videoPlayer.nativeElement;
-            const video2: HTMLVideoElement = this.videoPlayer2.nativeElement;
-            video.pause();
-            video2.pause();
         }
     }
 
@@ -94,24 +93,32 @@ export class SlideComponent implements AfterViewInit {
     }
 
     public slideChanged() {
+
         this.slides.getActiveIndex().then(res => {
             console.log('selectedPieceId', res);
             this.isUnlock = false;
             this.maintimeLeft = 30;
             this.selectedPiecOfArtId = res;
             if (res === 3) {
-                console.log('here db meter is gonna start');
-                this.dbMeter.start().subscribe(
-                    data => {
-                        console.log(data);
-                        if (data > 80) {
-                            this.isUnlock = true;
-                            this.router.navigate(['result'], { queryParams: { pieceOfArt: this.selectedPiecOfArtId } });
+                if (!this.dbMeterSubscribe) {
+                    this.dbMeter.start().subscribe(
+                        data => {
+                            console.log(data);
+                            if (data > 80) {
+                                this.isUnlock = true;
+                                this.router.navigate(['result'], { queryParams: { pieceOfArt: this.selectedPiecOfArtId } });
+                            }
+                        });
+                }
+            } else {
+                if (this.dbMeterSubscribe) {
+                    this.dbMeter.isListening().then(listen => {
+                        if (listen) {
+                            this.dbMeter.stop();
                         }
                     });
-            } else {
-                if (this.dbMeter.isListening) {
-                    this.dbMeter.stop();
+                    this.dbMeterSubscribe.unsubscribe();
+                    this.dbMeterSubscribe = null;
                 }
             }
             if (res === 1) {
@@ -124,6 +131,9 @@ export class SlideComponent implements AfterViewInit {
             } else {
                 if (this.deviceMotionsubscribe) {
                     this.deviceMotionsubscribe.unsubscribe();
+                    this.deviceMotionsubscribe = null;
+                    const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+                    video.pause();
                 }
             }
             if (res === 4) {
@@ -160,10 +170,7 @@ export class SlideComponent implements AfterViewInit {
             console.log('speed', speed);
             if (speed > 800) {
                 video.play();
-            } else {
-                video.pause();
             }
-
         }
     }
 }
