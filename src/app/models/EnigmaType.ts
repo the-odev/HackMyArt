@@ -5,4 +5,5 @@ export enum EnigmaTypeEnum {
     Audio = 2,
     Shake = 3,
     Tap = 4,
+    Turn = 5,
 }

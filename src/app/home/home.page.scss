@@ -9,3 +9,15 @@ i.fa {
 ion-col {
     text-align: center;
 }
+
+ion-content {
+    margin-top: 10px;
+}
+
+.logodiv {
+    height: 10vh;
+    background-image: url('/assets/Logo_Test petit.png');
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}

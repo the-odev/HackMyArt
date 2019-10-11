@@ -50,9 +50,11 @@
     </ion-row>
 </div>
 <div *ngIf="showYannResult">
-    <audio controls>
-        <source src="assets/Artung réponse 1.mp3" type="audio/mpeg">
-    </audio>
+    <ion-row class="ion-align-items-center">
+        <audio controls>
+            <source src="assets/Artung réponse 1.mp3" type="audio/mpeg">
+        </audio>
+    </ion-row>
 </div>
 <div style="text-align: center;">
     <a [routerLink]="['/home']">BACK</a>

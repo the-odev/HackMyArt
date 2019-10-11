@@ -37,18 +37,18 @@ export class HomePage implements AfterViewInit {
       if (this.slideComponent.maintimeLeft > 0) {
         this.slideComponent.maintimeLeft--;
       } else {
-        if (!this.slideComponent.isUnlock) {
-          alert('Time is up!');
-          this.slideComponent.slides.length().then(res => {
-            if ((this.slideComponent.selectedPiecOfArtId + 1) >= res) {
-              this.slideComponent.slides.slideTo(0);
-            } else {
-              this.slideComponent.slides.slideTo(this.slideComponent.selectedPiecOfArtId + 1);
-            }
+        // if (!this.slideComponent.isUnlock) {
+        //   alert('Time is up!');
+        //   this.slideComponent.slides.length().then(res => {
+        //     if ((this.slideComponent.selectedPiecOfArtId + 1) >= res) {
+        //       this.slideComponent.slides.slideTo(0);
+        //     } else {
+        //       this.slideComponent.slides.slideTo(this.slideComponent.selectedPiecOfArtId + 1);
+        //     }
 
-          });
-        }
-        this.slideComponent.maintimeLeft = 30;
+        //   });
+        // }
+        // this.slideComponent.maintimeLeft = 30;
       }
     }, 1000);
   }

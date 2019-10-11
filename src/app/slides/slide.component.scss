@@ -5,9 +5,13 @@ ion-slides,
 }
 
 ion-card {
+    margin: 5px 5px 5px;
     height: 100%;
     width: 100%;
+    justify-content: center;
+    align-items: center;
 }
+
 
 ion-card-content {
     height: 90%;
@@ -45,4 +49,11 @@ ion-card-content {
     background: #f52c2c;
     transition: transform 0.3s;
     transform: scale(1.5);
+}
+
+video{
+    margin-top: 30px;
+}
+audio {
+    margin-top: 30px;
 }

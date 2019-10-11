@@ -34,5 +34,11 @@ export class PieceOfArtSource {
             resultType: 'SOUND',
             resultLocation: 'assets/Artung réponse 1.mp3'
         });
+        this.peiceOfArts.push({
+            enigmaType: 5,
+            assetLink: 'assets/bolsonarro.webm',
+            title: ''
+        });
+
     }
 }

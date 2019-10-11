@@ -25,6 +25,10 @@
                     </audio>
                 </ion-card-content>
             </ion-card>
+            <ion-card *ngIf="pieceOfArt.enigmaType === 5">
+                <video #videoPlayer2 autoplay="false" class="videoPlayer">
+                    <source [src]="pieceOfArt.assetLink" type="video/webm" /></video>
+            </ion-card>
         </ion-slide>
     </ng-container>
 </ion-slides>

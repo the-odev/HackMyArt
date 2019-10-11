@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { DBMeter } from '@ionic-native/db-meter/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Subscription } from 'rxjs';
+import { Time } from '@angular/common';
 
 // import { NativeAudio } from '@ionic-native/native-audio/ngx';
 
@@ -26,11 +28,17 @@ export class SlideComponent implements AfterViewInit {
     private timeLeft = 10;
     public isUnlock = false;
     public maintimeLeft = 30;
+    private deviceMotionsubscribe: Subscription;
+    private lastUpdate: number;
+    private lastX: number;
+    private lastY: number;
+    private lastZ: number;
 
     public message = '';
 
     @ViewChild('input', { static: false }) myInput: IonInput;
     @ViewChild('videoPlayer', { static: false }) videoPlayer: ElementRef;
+    @ViewChild('videoPlayer2', { static: false }) videoPlayer2: ElementRef;
     @ViewChild(IonSlides, { static: false }) slides: IonSlides;
 
     constructor(private router: Router,
@@ -38,11 +46,6 @@ export class SlideComponent implements AfterViewInit {
         private dbMeter: DBMeter,
         private screenOrientation: ScreenOrientation) {
 
-        console.log('toto');
-
-        this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => {
-            console.log(acceleration);
-        });
     }
 
 
@@ -62,7 +65,9 @@ export class SlideComponent implements AfterViewInit {
     ngAfterViewInit() {
         if (this.videoPlayer) {
             const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+            const video2: HTMLVideoElement = this.videoPlayer2.nativeElement;
             video.pause();
+            video2.pause();
         }
     }
 
@@ -110,12 +115,25 @@ export class SlideComponent implements AfterViewInit {
                 }
             }
             if (res === 1) {
+                if (!this.deviceMotionsubscribe) {
+                    this.deviceMotionsubscribe = this.deviceMotion.watchAcceleration({ frequency: 200 })
+                        .subscribe((acceleration: DeviceMotionAccelerationData) => {
+                            this.checkAccelartion(acceleration);
+                        });
+                }
+            } else {
+                if (this.deviceMotionsubscribe) {
+                    this.deviceMotionsubscribe.unsubscribe();
+                }
+            }
+            if (res === 4) {
+                console.log('orientation');
                 this.screenOrientation.onChange().subscribe(
                     () => {
                         console.log('Orientation Changed');
                         console.log(this.screenOrientation.type);
-                        const video: HTMLVideoElement = this.videoPlayer.nativeElement;
-                        if (this.screenOrientation.type === 'landscape-secondary') {
+                        const video: HTMLVideoElement = this.videoPlayer2.nativeElement;
+                        if (this.screenOrientation.type === 'portrait-secondary') {
                             video.play();
                         } else {
                             video.pause();
@@ -123,5 +141,29 @@ export class SlideComponent implements AfterViewInit {
                     });
             }
         });
+    }
+
+    public checkAccelartion(acceleration: DeviceMotionAccelerationData) {
+        const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+        if (!this.lastUpdate) {
+            this.lastUpdate = new Date().getTime();
+            this.lastX = acceleration.x;
+            this.lastY = acceleration.y;
+            this.lastZ = acceleration.z;
+        }
+        const currentTime = new Date().getTime();
+        if (currentTime - this.lastUpdate > 100) {
+            const diffTime = currentTime - this.lastUpdate;
+            this.lastUpdate = currentTime;
+            const speed = Math.abs((acceleration.x + acceleration.y + acceleration.z - this.lastX - this.lastY - this.lastZ)
+                / diffTime * 10000);
+            console.log('speed', speed);
+            if (speed > 800) {
+                video.play();
+            } else {
+                video.pause();
+            }
+
+        }
     }
 }
